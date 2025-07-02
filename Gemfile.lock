@@ -1,0 +1,20 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bigdecimal (3.2.2)
+    dotenv (3.1.8)
+    pg (1.5.9)
+    sequel (5.93.0)
+      bigdecimal
+
+PLATFORMS
+  ruby
+  x86_64-linux
+
+DEPENDENCIES
+  dotenv
+  pg
+  sequel
+
+BUNDLED WITH
+   2.6.9
