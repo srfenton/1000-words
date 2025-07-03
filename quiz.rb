@@ -22,38 +22,52 @@ end
 #puts translations
 
 class Question
- attr_accessor :answer, :choices
+ attr_accessor :answer, :choices, :choices_map
 
- def initialize(translations, seen) 
-   @answer = translations.keys.sample
- 
+ def initialize(translations, seen)     
+   
    seen.each do |key|
    translations.delete(key)
    end
+
+   @answer = translations.keys.sample
 
    @choices = translations.keys.sample(3)
    @choices << @answer
    @choices.shuffle!
 
+   @choices_map = {
+     'a' => @choices[0],
+     'b' => @choices[1],
+     'c' => @choices[2],
+     'd' => @choices[3]
+     }
  end
 
  def correct?(submitted, translations)
-   translations[submitted.downcase.chomp.strip.downcase] == translations[@answer]
+   result = translations[submitted.downcase.chomp.strip.downcase] == translations[@answer]
+   result = translations[@choices_map[submitted.downcase.chomp.strip.downcase]] == translations[@answer]
+   if not result
+     puts " \n #{@answer} is the answer \n "
+   else 
+     puts 'correct'
+   end
  end
-
 end
 
- test = Question.new(translations, seen)
-
-for i in 1...5
+for i in 0...5
   #begin test
   test = Question.new(translations, seen)
+  system("clear")
   puts "#{translations[test.answer]} \n "
-  puts test.choices
-  puts
-  submitted = $stdin.gets
-  puts
-  puts test.correct?(submitted, translations)
-  puts
+  seen.append(test.answer)
+  
+  test.choices_map.each do |letter, word|
+  puts "#{letter}. #{word}"
 end
 
+  submitted = $stdin.gets
+  test.correct?(submitted, translations)
+  sleep(1)       
+  system("clear")
+end
