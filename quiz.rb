@@ -1,37 +1,32 @@
-if ARGV[0]
-  language = ARGV[0]
-else
-  directory_path = "vocab"  
+directory_path = "vocab"  
 
-  # Check if the directory exists
-  if Dir.exist?(directory_path)
-    puts "Files in directory '#{directory_path}':"
+# Check if the directory exists
+if Dir.exist?(directory_path)
+  puts "Files in directory '#{directory_path}':"
 
-    # Initialize a hash to store languages
-    languages_hash = {}
-    index = 0
+  # Initialize a hash to store languages
+  languages_hash = {}
+  index = 0
 
-    # Iterate over each file in the directory
-    Dir.foreach(directory_path) do |file|
-      next if file == '.' || file == '..'
-      puts "#{index + 1}. #{file}"
-      languages_hash[index + 1] = file.chomp('.txt')  # Store the language without the .txt extension
-      index += 1
-    end
-
-    # Prompt user to select a language
-    puts "Select a language by number:"
-    language_index = nil
-
-    while !languages_hash.key?(language_index)
-      puts "Please select a valid number."
-      language_index = $stdin.gets.chomp.to_i
-    end
-    language = languages_hash[language_index]
-  else
-    puts "Error: Directory '#{directory_path}' does not exist."
-    exit
+  # Iterate over each file in the directory
+  Dir.foreach(directory_path) do |file|
+    next if file == '.' || file == '..'
+    puts "#{index + 1}. #{file}"
+    languages_hash[index + 1] = file.chomp('.txt')  # Store the language without the .txt extension
+    index += 1
   end
+
+  # Prompt user to select a language
+  puts "Select a language by number:"
+  language_index = nil
+
+  while !languages_hash.key?(language_index)
+    language_index = $stdin.gets.chomp.to_i
+  end
+  language = languages_hash[language_index]
+else
+  puts "Error: Directory '#{directory_path}' does not exist."
+  exit
 end
 
 file_path = "vocab/#{language}.txt"
@@ -45,17 +40,16 @@ File.open(file_path, 'r') do |file|
    # Split the line by tab character
     parts = line.split("\t") 
     
-    # Extract Italian and English words and assign them the number
-    italian = parts[1].strip
+    # Extract target_language and English words and assign them the number
+    target_language = parts[1].strip
     english = parts[2].strip
     
-    # Store the Italian word and its English translation in the hash
-    translations[italian] = english
+    # Store the target_language word and its English translation in the hash
+    translations[target_language] = english
   end
 end
 
 # Output the translations hash
-#puts translations
 
 class Question
  attr_accessor :answer, :choices, :choices_map
@@ -91,22 +85,25 @@ class Question
  end
 end
 
+
 for i in 0...5
-  #begin test
+  # Begin test
   current_question = Question.new(translations, seen)
   system("clear")
-  puts "#{translations[current_question.answer]} \n "
+  puts "#{i+1}. #{translations[current_question.answer]} \n "
   seen.append(current_question.answer)
-  
+
   current_question.choices_map.each do |letter, word|
-  puts "#{letter}. #{word}"
-end
+    puts "#{letter}. #{word}"
+  end
   submitted = nil
   while !['a', 'b', 'c', 'd'].include?(submitted)
-  submitted = $stdin.gets.chomp
+    submitted = $stdin.gets.chomp
   end
 
   current_question.correct?(submitted, translations)
-  sleep(1)       
+  sleep(1)
   system("clear")
+  index += 1
 end
+
