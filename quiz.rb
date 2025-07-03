@@ -65,8 +65,11 @@ for i in 0...5
   test.choices_map.each do |letter, word|
   puts "#{letter}. #{word}"
 end
+  submitted = nil
+  while !['a', 'b', 'c', 'd'].include?(submitted)
+  submitted = $stdin.gets.chomp
+  end
 
-  submitted = $stdin.gets
   test.correct?(submitted, translations)
   sleep(1)       
   system("clear")
