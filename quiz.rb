@@ -1,4 +1,40 @@
-file_path = 'vocab/italian.txt'
+if ARGV[0]
+  language = ARGV[0]
+else
+  directory_path = "vocab"  
+
+  # Check if the directory exists
+  if Dir.exist?(directory_path)
+    puts "Files in directory '#{directory_path}':"
+
+    # Initialize a hash to store languages
+    languages_hash = {}
+    index = 0
+
+    # Iterate over each file in the directory
+    Dir.foreach(directory_path) do |file|
+      next if file == '.' || file == '..'
+      puts "#{index + 1}. #{file}"
+      languages_hash[index + 1] = file.chomp('.txt')  # Store the language without the .txt extension
+      index += 1
+    end
+
+    # Prompt user to select a language
+    puts "Select a language by number:"
+    language_index = nil
+
+    while !languages_hash.key?(language_index)
+      puts "Please select a valid number."
+      language_index = $stdin.gets.chomp.to_i
+    end
+    language = languages_hash[language_index]
+  else
+    puts "Error: Directory '#{directory_path}' does not exist."
+    exit
+  end
+end
+
+file_path = "vocab/#{language}.txt"
 translations = {}
 seen = []
 
@@ -57,12 +93,12 @@ end
 
 for i in 0...5
   #begin test
-  test = Question.new(translations, seen)
+  current_question = Question.new(translations, seen)
   system("clear")
-  puts "#{translations[test.answer]} \n "
-  seen.append(test.answer)
+  puts "#{translations[current_question.answer]} \n "
+  seen.append(current_question.answer)
   
-  test.choices_map.each do |letter, word|
+  current_question.choices_map.each do |letter, word|
   puts "#{letter}. #{word}"
 end
   submitted = nil
@@ -70,7 +106,7 @@ end
   submitted = $stdin.gets.chomp
   end
 
-  test.correct?(submitted, translations)
+  current_question.correct?(submitted, translations)
   sleep(1)       
   system("clear")
 end
