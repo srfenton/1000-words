@@ -1,5 +1,4 @@
-directory_path = "vocab"  
-
+directory_path = File.join(__dir__, "vocab")
 # Check if the directory exists
 if Dir.exist?(directory_path)
   puts "Files in directory '#{directory_path}':"
@@ -29,7 +28,7 @@ else
   exit
 end
 
-file_path = "vocab/#{language}.txt"
+file_path = "#{directory_path}/#{language}.txt"
 translations = {}
 seen = []
 

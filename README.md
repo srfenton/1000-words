@@ -28,21 +28,57 @@ Make sure there is a header row and each row contains at least three tab-separat
 ## How It Works
 
 1. The script lists all `.txt` files inside the `vocab/` directory.
-2. You select a language by number.
-3. It parses the selected file and loads the vocabulary.
-4. Then it gives you 5 random multiple-choice questions:
-   - You are shown the English word.
-   - You choose the correct translation from four options (a–d).
-   - It tells you whether your answer is correct and shows the correct answer if not.
-5. The quiz avoids repeating questions you've already seen.
 
-## How to Run
+## How to Use
+
+If you're new to the command line, don't worry — here’s a step-by-step guide to get started on macOS or Linux.
+
+### 1. Open the Terminal
+
+- On **macOS**: Press `Cmd + Space`, type `Terminal`, and hit Enter.  
+- On **Linux**: Look for “Terminal” in your application menu or press `Ctrl + Alt + T`.
+
+### 2. Install Ruby (if not already installed)
+
+To check if Ruby is installed, type:
+
+```bash
+ruby -v
+```
+
+If you don’t see a version (e.g., `ruby 3.1.2`), install Ruby using:
+
+- **macOS**: `brew install ruby` (you’ll need [Homebrew](https://brew.sh))
+- **Ubuntu/Linux**: `sudo apt install ruby`
+
+### 3. Download the Project
+
+To get the project files:
+
+```bash
+git clone https://github.com/srfenton/1000-words.git
+cd 1000-words
+```
+
+> If you don’t have Git installed, install it first:  
+> - **macOS**: `brew install git`  
+> - **Ubuntu/Linux**: `sudo apt install git`
+
+### 4. Run the Quiz
+
+Make sure you're inside the project folder. Then type:
 
 ```bash
 ruby quiz.rb
 ```
 
-Make sure you are in the root directory of the project when running the command and that the `vocab` folder exists.
+The app will:
+
+- Show a list of available languages.
+- Ask you to choose one.
+- Give you a short multiple-choice quiz using vocabulary from the corresponding file.
+
+
 
 ## Requirements
 
