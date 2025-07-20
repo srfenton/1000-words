@@ -84,8 +84,13 @@ class Question
  end
 end
 
+system('clear')
+puts "press q to quit at any time"
+sleep(1)
+system('clear')
 
-for i in 0...5
+i = 0
+while 1 < 1000 
   # Begin test
   current_question = Question.new(translations, seen)
   system("clear")
@@ -96,13 +101,15 @@ for i in 0...5
     puts "#{letter}. #{word}"
   end
   submitted = nil
-  while !['a', 'b', 'c', 'd'].include?(submitted)
+  while !['a', 'b', 'c', 'd','q'].include?(submitted)
     submitted = $stdin.gets.chomp
   end
 
   current_question.correct?(submitted, translations)
   sleep(1)
   system("clear")
-  index += 1
+  i += 1 
+  next unless submitted == 'q'
+  break
 end
 
